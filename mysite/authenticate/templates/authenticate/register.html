@@ -2,17 +2,23 @@
 
 {% block content %}
 
-<h2>Register</h2>
+<h2 class="text-center">Register</h2>
+<div class="col-md-6 offset-md-3">
+  <form method="POST" action="{% url 'register' %}">
+    {% csrf_token %}
 
-<form method="POST" action="{% url 'register' %}">
-  {% csrf_token %}
+    {% if form.errors %}
+      <div class="alert alert-warning alert-dismissable" role="alert">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <p>Your form has errors</p>
+        {% for field in form %}
+          {{ field.errors }}
+        {% endfor %}
+      </div>
+    {% endif %}
 
-  {% if form.errors %}
-    <p>Your Form Has Errors</p>
-  {% endif %}
-
-  {{ form.as_p }}
-  <input type="submit" value="register" class="btn btn-secondary">
-</form>
-
+    {{ form.as_p }}
+    <input type="submit" value="register" class="btn btn-secondary">
+  </form>
+</div>
 {% endblock %}
